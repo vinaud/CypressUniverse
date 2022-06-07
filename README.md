@@ -1,2 +1,2 @@
 # CypressUniverse
-Project developed trhough the Cypress universe bootcamp
+Project developed through the Cypress Universe bootcamp

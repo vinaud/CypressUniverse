@@ -32,4 +32,16 @@ describe('teste de alertas', () => {
     
   });
 
+  it('deve exibir mensagem de boas vindas com meu nome', () => {
+    cy.visit('/javascript_alerts');
+
+    cy.window().then(function($win){
+      cy.stub($win, 'prompt').returns('kyogre');
+      cy.contains('button', 'Prompt').click();
+    });
+
+    cy.get('#result').should('have.text', 'Olá, kyogre');
+
+  });
+
 })

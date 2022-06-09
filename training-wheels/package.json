@@ -15,6 +15,7 @@
   "author": "João Vinaud",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^10.0.2"
+    "cypress": "^10.0.2",
+    "cypress-real-events": "^1.7.0"
   }
 }

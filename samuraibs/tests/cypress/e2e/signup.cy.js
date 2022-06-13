@@ -2,7 +2,7 @@
 
 describe('Teste de cadastro no sistema', () => {
 
-  it('deve cadastrar um novo usuário', () => {
+  context('quando o usuário é novato', function(){
 
     const user = {
       name: 'João Vinaud',
@@ -10,31 +10,36 @@ describe('Teste de cadastro no sistema', () => {
       password: 'pwd123'
     }
 
-    cy.task('removeUser', user.email).then(function(result){
-      console.log(result);
-    })
+    before(function(){
+      cy.task('removeUser', user.email).then(function(result){
+        console.log(result);
+      });
+    });
 
-    cy.visit('/signup');
+    it('deve cadastrar com sucesso', () => {
 
-   // cy.intercept('POST', '/users', {
-   //   statuscode: 200
-   // }).as('postUser');
-
-    cy.get('input[placeholder="Nome"]').type(user.name);
-    cy.get('input[placeholder="E-mail"]').type(user.email);
-    cy.get('input[placeholder="Senha"]').type(user.password);
-
-    cy.contains('button', 'Cadastrar').click();
-
-   // cy.wait('@postUser')
-
-    cy.get('.toast')
-      .should('be.visible')
-      .find('p')
-      .should('have.text', 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!');
+      cy.visit('/signup');
+  
+     // cy.intercept('POST', '/users', {
+     //   statuscode: 200
+     // }).as('postUser');
+  
+      cy.get('input[placeholder="Nome"]').type(user.name);
+      cy.get('input[placeholder="E-mail"]').type(user.email);
+      cy.get('input[placeholder="Senha"]').type(user.password);
+  
+      cy.contains('button', 'Cadastrar').click();
+  
+     // cy.wait('@postUser')
+  
+      cy.get('.toast', { timeout: 7000 })
+        .should('be.visible')
+        .find('p')
+        .should('have.text', 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!');
+    });
   });
 
-  it('deve exibir email ja cadastrado', () => {
+  context('quando o email já existe', function(){
 
     const user = {
       name: 'Fernando papito',
@@ -43,31 +48,36 @@ describe('Teste de cadastro no sistema', () => {
       is_provider: true
     }
 
-    cy.task('removeUser', user.email).then(function(result){
-      console.log(result);
+    before(function(){
+
+      cy.task('removeUser', user.email).then(function(result){
+        console.log(result);
+      });
+  
+      cy.request(
+        'POST',
+        'http://localhost:3333/users',
+        user
+      ).then(function(response){
+        expect(response.status).to.be.equal(200);
+      });
     });
 
-    cy.request(
-      'POST',
-      'http://localhost:3333/users',
-      user
-    ).then(function(response){
-      expect(response.status).to.be.equal(200);
+    it('não deve cadastrar o usuário', () => {
+
+      cy.visit('/signup');
+  
+      cy.get('input[placeholder="Nome"]').type(user.name);
+      cy.get('input[placeholder="E-mail"]').type(user.email);
+      cy.get('input[placeholder="Senha"]').type(user.password);
+  
+      cy.contains('button', 'Cadastrar').click();
+  
+      cy.get('.toast', { timeout: 7000 })
+        .should('be.visible')
+        .find('p')
+        .should('have.text', 'Email já cadastrado para outro usuário.');
     });
-
-    cy.visit('/signup');
-
-    cy.get('input[placeholder="Nome"]').type(user.name);
-    cy.get('input[placeholder="E-mail"]').type(user.email);
-    cy.get('input[placeholder="Senha"]').type(user.password);
-
-    cy.contains('button', 'Cadastrar').click();
-
-    cy.get('.toast')
-      .should('be.visible')
-      .find('p')
-      .should('have.text', 'Email já cadastrado para outro usuário.');
   });
-
 
 })

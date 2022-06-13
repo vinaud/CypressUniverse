@@ -2,13 +2,13 @@
 
 describe('Teste de cadastro no sistema', () => {
 
-  const user = {
-    name: 'João Vinaud',
-    email: 'vinaud@samuraibs.com',
-    password: 'pwd123'
-  }
-
   it('deve cadastrar um novo usuário', () => {
+
+    const user = {
+      name: 'João Vinaud',
+      email: 'vinaud@samuraibs.com',
+      password: 'pwd123'
+    }
 
     cy.task('removeUser', user.email).then(function(result){
       console.log(result);
@@ -35,6 +35,26 @@ describe('Teste de cadastro no sistema', () => {
   });
 
   it('deve exibir email ja cadastrado', () => {
+
+    const user = {
+      name: 'Fernando papito',
+      email: 'papito@samuraibs.com',
+      password: 'pwd123',
+      is_provider: true
+    }
+
+    cy.task('removeUser', user.email).then(function(result){
+      console.log(result);
+    });
+
+    cy.request(
+      'POST',
+      'http://localhost:3333/users',
+      user
+    ).then(function(response){
+      expect(response.status).to.be.equal(200);
+    });
+
     cy.visit('/signup');
 
     cy.get('input[placeholder="Nome"]').type(user.name);

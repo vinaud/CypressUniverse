@@ -6,10 +6,9 @@
   "author": "João Vinaud",
   "license": "MIT",
   "devDependencies": {
+    "cypress": "^10.1.0",
     "faker": "^5.5.3",
-    "cypress": "^10.1.0"
+    "pg": "^8.7.3"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }

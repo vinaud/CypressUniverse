@@ -10,18 +10,23 @@ describe('Teste de cadastro no sistema', () => {
       password: 'pwd123'
     }
 
+    cy.task('removeUser', user.email).then(function(result){
+      console.log(result);
+    })
+
     cy.visit('/signup');
 
-    cy.intercept('POST', '/users', {
-      statuscode: 200
-    }).as('postUser');
+   // cy.intercept('POST', '/users', {
+   //   statuscode: 200
+   // }).as('postUser');
 
     cy.get('input[placeholder="Nome"]').type(user.name);
     cy.get('input[placeholder="E-mail"]').type(user.email);
     cy.get('input[placeholder="Senha"]').type(user.password);
 
     cy.contains('button', 'Cadastrar').click();
-    cy.wait('@postUser')
+
+   // cy.wait('@postUser')
 
     cy.get('.toast')
       .should('be.visible')

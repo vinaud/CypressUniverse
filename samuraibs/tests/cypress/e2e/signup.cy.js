@@ -23,7 +23,7 @@ describe('Teste de cadastro no sistema', () => {
       signupPage.submit();
 
       const expectedtext = 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!';
-      signupPage.toastHaveText(expectedtext);
+      signupPage.toast.shouldHaveText(expectedtext);
      
     });
   });
@@ -59,7 +59,7 @@ describe('Teste de cadastro no sistema', () => {
      signupPage.submit();
 
      const expectedtext = 'Email já cadastrado para outro usuário.';
-     signupPage.toastHaveText(expectedtext);
+     signupPage.toast.shouldHaveText(expectedtext);
     });
   });
 

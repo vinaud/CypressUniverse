@@ -1,6 +1,11 @@
 import { el } from './elements'
+import  toast  from '../components/toast'
 
 class SignupPage{
+
+    constructor(){
+        this.toast = toast;
+    }
 
     go(){
         cy.visit('/signup');
@@ -16,12 +21,11 @@ class SignupPage{
         cy.contains(el.signupButton).click();
     }
 
-    toastHaveText(expectedtext){
-        cy.get(el.toast, { timeout: 7000 })
-        .should('be.visible')
-        .find('p')
-        .should('have.text', expectedtext);
-    }
+    
+
+
+
+    
 }
 
 export default new SignupPage();

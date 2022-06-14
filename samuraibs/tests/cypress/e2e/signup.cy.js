@@ -24,9 +24,9 @@ describe('Teste de cadastro no sistema', () => {
      //   statuscode: 200
      // }).as('postUser');
   
-      cy.get('input[placeholder="Nome"]').type(user.name);
-      cy.get('input[placeholder="E-mail"]').type(user.email);
-      cy.get('input[placeholder="Senha"]').type(user.password);
+      cy.get('input[placeholder^="Nome"]').type(user.name);
+      cy.get('input[placeholder$="email"]').type(user.email);
+      cy.get('input[placeholder*="senha"]').type(user.password);
   
       cy.contains('button', 'Cadastrar').click();
   
@@ -67,9 +67,9 @@ describe('Teste de cadastro no sistema', () => {
 
       cy.visit('/signup');
   
-      cy.get('input[placeholder="Nome"]').type(user.name);
-      cy.get('input[placeholder="E-mail"]').type(user.email);
-      cy.get('input[placeholder="Senha"]').type(user.password);
+      cy.get('input[placeholder^="Nome"]').type(user.name);
+      cy.get('input[placeholder$="email"]').type(user.email);
+      cy.get('input[placeholder*="senha"]').type(user.password);
   
       cy.contains('button', 'Cadastrar').click();
   

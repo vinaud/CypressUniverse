@@ -1,4 +1,4 @@
-//var faker = require('faker');
+import signupPage from '../support/pages/signup';
 
 describe('Teste de cadastro no sistema', () => {
 
@@ -18,24 +18,13 @@ describe('Teste de cadastro no sistema', () => {
 
     it('deve cadastrar com sucesso', () => {
 
-      cy.visit('/signup');
-  
-     // cy.intercept('POST', '/users', {
-     //   statuscode: 200
-     // }).as('postUser');
-  
-      cy.get('input[placeholder^="Nome"]').type(user.name);
-      cy.get('input[placeholder$="email"]').type(user.email);
-      cy.get('input[placeholder*="senha"]').type(user.password);
-  
-      cy.contains('button', 'Cadastrar').click();
-  
-     // cy.wait('@postUser')
-  
-      cy.get('.toast', { timeout: 7000 })
-        .should('be.visible')
-        .find('p')
-        .should('have.text', 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!');
+      signupPage.go();
+      signupPage.form(user);
+      signupPage.submit();
+
+      const expectedtext = 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!';
+      signupPage.toastHaveText(expectedtext);
+     
     });
   });
 
@@ -65,18 +54,12 @@ describe('Teste de cadastro no sistema', () => {
 
     it('não deve cadastrar o usuário', () => {
 
-      cy.visit('/signup');
-  
-      cy.get('input[placeholder^="Nome"]').type(user.name);
-      cy.get('input[placeholder$="email"]').type(user.email);
-      cy.get('input[placeholder*="senha"]').type(user.password);
-  
-      cy.contains('button', 'Cadastrar').click();
-  
-      cy.get('.toast', { timeout: 7000 })
-        .should('be.visible')
-        .find('p')
-        .should('have.text', 'Email já cadastrado para outro usuário.');
+     signupPage.go();
+     signupPage.form(user);
+     signupPage.submit();
+
+     const expectedtext = 'Email já cadastrado para outro usuário.';
+     signupPage.toastHaveText(expectedtext);
     });
   });
 

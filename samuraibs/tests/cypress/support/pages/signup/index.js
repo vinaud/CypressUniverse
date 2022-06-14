@@ -1,3 +1,5 @@
+import { el } from './elements'
+
 class SignupPage{
 
     go(){
@@ -5,17 +7,17 @@ class SignupPage{
     }
 
     form(user){
-        cy.get('input[placeholder^="Nome"]').type(user.name);
-        cy.get('input[placeholder$="email"]').type(user.email);
-        cy.get('input[placeholder*="senha"]').type(user.password);
+        cy.get(el.name).type(user.name);
+        cy.get(el.email).type(user.email);
+        cy.get(el.password).type(user.password);
     }
 
     submit(){
-        cy.contains('button', 'Cadastrar').click();
+        cy.contains(el.signupButton).click();
     }
 
     toastHaveText(expectedtext){
-        cy.get('.toast', { timeout: 7000 })
+        cy.get(el.toast, { timeout: 7000 })
         .should('be.visible')
         .find('p')
         .should('have.text', expectedtext);

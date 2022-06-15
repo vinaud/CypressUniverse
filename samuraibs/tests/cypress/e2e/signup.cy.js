@@ -63,4 +63,22 @@ describe('Teste de cadastro no sistema', () => {
     });
   });
 
+  context('quando o email é incorreto', function(){
+
+    const user = {
+      name: 'Elisabeth Olsen',
+      email: 'lisa.yahoo.com',
+      password: 'pwd123'
+    }
+
+    it('deve exibir mensagem de alerta', function(){
+
+      signupPage.go();
+      signupPage.form(user);
+      signupPage.submit();
+      signupPage.alertHaveText('Informe um email válido');
+    });
+
+  });
+
 })

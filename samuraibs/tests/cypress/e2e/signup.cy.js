@@ -81,4 +81,33 @@ describe('Teste de cadastro no sistema', () => {
 
   });
 
+  context('quando a senha tem menos de 6 caracteres', function(){
+
+    const passwords = ['1', '2a', 'ab3', 'abc4', 'ab##5'];
+
+    beforeEach(function(){
+      signupPage.go();
+    });
+
+    passwords.forEach(function(p){
+      it('não deve cadastrar com a senha: ' + p, function(){
+
+        const user = {
+          name: 'Jason Friday',
+          email: 'jason@gmail.com',
+          password: p
+        }
+
+        signupPage.form(user);
+        signupPage.submit();
+      });
+    });
+
+    afterEach(function(){
+      signupPage.alertHaveText('Pelo menos 6 caracteres');
+    });
+
+    
+  });
+
 })

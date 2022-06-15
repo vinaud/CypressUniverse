@@ -110,4 +110,23 @@ describe('Teste de cadastro no sistema', () => {
     
   });
 
+  context('quando não preencho nenhum dos campos', function(){
+
+    const alertMessages = ['Nome é obrigatório', 'E-mail é obrigatório', 'Senha é obrigatória'];
+
+    before(function(){
+
+      signupPage.go();
+      signupPage.submit();
+
+    });
+
+    alertMessages.forEach(function(alert){
+      it('deve exibir ' + alert.toLowerCase(), function(){
+        signupPage.alertHaveText(alert);
+      });
+    });
+
+  });
+
 })

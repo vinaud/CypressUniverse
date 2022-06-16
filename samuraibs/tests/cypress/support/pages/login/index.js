@@ -1,3 +1,5 @@
+import { el } from  './elements';
+
 class LoginPage {
 
     go(){
@@ -5,12 +7,12 @@ class LoginPage {
     }
 
     form(user){
-        cy.get('input[placeholder$=mail]').type(user.email);
-        cy.get('input[placeholder=Senha]').type(user.password);
+        cy.get(el.email).type(user.email);
+        cy.get(el.password).type(user.password);
     }
 
     submit(){
-        cy.contains('button[type=submit]', 'Entrar').click();
+        cy.contains(el.signInButton).click();
     }
 }
 

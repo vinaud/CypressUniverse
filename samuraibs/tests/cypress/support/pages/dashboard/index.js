@@ -1,7 +1,9 @@
+import header from '../components/header'
+
 class DashPage{
 
-    userLoggedIn(userName){
-        cy.get('header a strong', {timeout: 7000}).should('be.visible').should('have.text', userName);
+    constructor(){
+        this.header = header;
     }
 }
 

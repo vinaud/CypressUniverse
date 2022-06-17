@@ -67,7 +67,7 @@ describe('Teste de cadastro no sistema', () => {
       signupPage.go();
       signupPage.form(user);
       signupPage.submit();
-      signupPage.alertHaveText('Informe um email válido');
+      signupPage.alert.haveText('Informe um email válido');
     });
 
   });
@@ -95,7 +95,7 @@ describe('Teste de cadastro no sistema', () => {
     });
 
     afterEach(function () {
-      signupPage.alertHaveText('Pelo menos 6 caracteres');
+      signupPage.alert.haveText('Pelo menos 6 caracteres');
     });
 
 
@@ -114,7 +114,7 @@ describe('Teste de cadastro no sistema', () => {
 
     alertMessages.forEach(function (alert) {
       it('deve exibir ' + alert.toLowerCase(), function () {
-        signupPage.alertHaveText(alert);
+        signupPage.alert.haveText(alert);
       });
     });
 

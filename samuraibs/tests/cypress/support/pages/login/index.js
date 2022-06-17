@@ -20,7 +20,7 @@ class LoginPage {
         cy.contains(el.signInButton).click();
     }
 
-    alertHavetext(expectedText){
+    alertHaveText(expectedText){
         cy.contains(el.alertError, expectedText).should('be.visible');
     }
 

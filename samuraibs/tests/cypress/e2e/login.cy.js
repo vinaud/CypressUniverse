@@ -72,11 +72,30 @@ describe('página de login', function () {
             it('não deve logar com o email: ' + email, function () {
 
                 const user = { email: email, password: 'pwd123' };
-                
+
                 loginPage.form(user);
                 loginPage.submit();
-                loginPage.alertHavetext('Informe um email válido');
+                loginPage.alertHaveText('Informe um email válido');
             })
         })
     });
+
+    context('quando não preencho nenhum dos campos', function () {
+
+        const alertMessages = [ 'E-mail é obrigatório', 'Senha é obrigatória'];
+    
+        before(function () {
+    
+          loginPage.go();
+          loginPage.submit();
+    
+        });
+    
+        alertMessages.forEach(function (alert) {
+          it('deve exibir ' + alert.toLowerCase(), function () {
+            loginPage.alertHaveText
+          });
+        });
+    
+      });
 });

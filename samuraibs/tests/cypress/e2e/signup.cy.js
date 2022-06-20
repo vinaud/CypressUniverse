@@ -1,16 +1,19 @@
 import signupPage from '../support/pages/signup';
 
-describe('Teste de cadastro no sistema', () => {
+describe('Teste de cadastro no sistema', function() {
   before(function () {
-    cy.fixture('user').then(function(joao){
-      this.joao = joao
+    cy.fixture('signup').then(function(signup){
+      this.success = signup.success;
+      this.email_dup = signup.email_dup;
+      this.email_inv = signup.email_inv;
+      this.short_password = signup.short_password;
     });
   });
 
   context('quando o usuário é novato', function () {
 
     before(function () {
-      cy.task('removeUser', this.joao.email).then(function (result) {
+      cy.task('removeUser', this.success.email).then(function (result) {
         console.log(result);
       });
     });
@@ -18,7 +21,7 @@ describe('Teste de cadastro no sistema', () => {
     it('deve cadastrar com sucesso', function () {
 
       signupPage.go();
-      signupPage.form(this.joao);
+      signupPage.form(this.success);
       signupPage.submit();
 
       const expectedtext = 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!';
@@ -29,23 +32,16 @@ describe('Teste de cadastro no sistema', () => {
 
   context('quando o email já existe', function () {
 
-    const user = {
-      name: 'Fernando papito',
-      email: 'papito@samuraibs.com',
-      password: 'pwd123',
-      is_provider: true
-    }
-
     before(function () {
 
-      cy.postUser(user);
+      cy.postUser(this.email_dup);
 
     });
 
-    it('não deve cadastrar o usuário', () => {
+    it('não deve cadastrar o usuário', function() {
 
       signupPage.go();
-      signupPage.form(user);
+      signupPage.form(this.email_dup);
       signupPage.submit();
 
       const expectedtext = 'Email já cadastrado para outro usuário.';
@@ -55,16 +51,10 @@ describe('Teste de cadastro no sistema', () => {
 
   context('quando o email é incorreto', function () {
 
-    const user = {
-      name: 'Elisabeth Olsen',
-      email: 'lisa.yahoo.com',
-      password: 'pwd123'
-    }
-
     it('deve exibir mensagem de alerta', function () {
 
       signupPage.go();
-      signupPage.form(user);
+      signupPage.form(this.email_inv);
       signupPage.submit();
       signupPage.alert.haveText('Informe um email válido');
     });
@@ -82,13 +72,9 @@ describe('Teste de cadastro no sistema', () => {
     passwords.forEach(function (p) {
       it('não deve cadastrar com a senha: ' + p, function () {
 
-        const user = {
-          name: 'Jason Friday',
-          email: 'jason@gmail.com',
-          password: p
-        }
+        this.short_password.password = p
 
-        signupPage.form(user);
+        signupPage.form(this.short_password);
         signupPage.submit();
       });
     });

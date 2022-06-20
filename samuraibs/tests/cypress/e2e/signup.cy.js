@@ -1,25 +1,24 @@
 import signupPage from '../support/pages/signup';
 
 describe('Teste de cadastro no sistema', () => {
+  before(function () {
+    cy.fixture('user').then(function(joao){
+      this.joao = joao
+    });
+  });
 
   context('quando o usuário é novato', function () {
 
-    const user = {
-      name: 'João Vinaud',
-      email: 'vinaud@samuraibs.com',
-      password: 'pwd123'
-    }
-
     before(function () {
-      cy.task('removeUser', user.email).then(function (result) {
+      cy.task('removeUser', this.joao.email).then(function (result) {
         console.log(result);
       });
     });
 
-    it('deve cadastrar com sucesso', () => {
+    it('deve cadastrar com sucesso', function () {
 
       signupPage.go();
-      signupPage.form(user);
+      signupPage.form(this.joao);
       signupPage.submit();
 
       const expectedtext = 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!';

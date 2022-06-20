@@ -1,4 +1,5 @@
-import forgotPassPage from '../support/pages/forgotpass'
+import forgotPassPage from '../support/pages/forgotpass';
+import recoveryPassPage from '../support/pages/resetpass';
 
 describe('resgate de senha', function(){
 
@@ -21,6 +22,27 @@ describe('resgate de senha', function(){
 
             const message = 'Enviamos um e-mail para confirmar a recuperação de senha, cheque sua caixa de entrada.';
             forgotPassPage.toast.shouldHaveText(message);
+        });
+
+    });
+
+    context('quando o usuário solicita o resgate', function(){
+
+        before(function(){
+            cy.postUser(this.data);
+            cy.recoveryPass(this.data.email);
+        });
+
+        it('deve poder cadastrar uma nova senha', function(){
+
+            const token = Cypress.env('recoveryToken');
+
+            recoveryPassPage.go(token);
+            recoveryPassPage.form('abc123', 'abc123');
+            recoveryPassPage.submit();
+
+            const expectedtext = 'Agora você já pode logar com a sua nova senha secreta.'
+            recoveryPassPage.toast.shouldHaveText(expectedtext);
         });
     });
 });

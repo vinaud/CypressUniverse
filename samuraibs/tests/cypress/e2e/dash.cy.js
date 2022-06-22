@@ -8,7 +8,7 @@ describe('dashboard', function () {
                 password: 'pwd123',
                 is_provider: false
             },
-            samurai: {
+            provider: {
                 name: 'Ramon Valdes',
                 email: 'ramon@televisa.com',
                 password: 'pwd123',
@@ -17,9 +17,9 @@ describe('dashboard', function () {
         }
 
         before(function () {
+            cy.postUser(data.provider);
             cy.postUser(data.customer);
-            cy.postUser(data.samurai);
-
+            
             cy.apiLogin(data.customer)
         })
 

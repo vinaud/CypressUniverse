@@ -19,7 +19,7 @@ class DashPage{
     appointmentShouldBeVisible(customer, hour){
         cy.contains('div', customer.name).should('be.visible')
         .parent()
-        .contains('span[class=appointment]', hour).should('be.visible');
+        .contains(el.boxHour, hour).should('be.visible');
     }
 }
 

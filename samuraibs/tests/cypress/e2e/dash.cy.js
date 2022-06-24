@@ -1,3 +1,6 @@
+import loginPage from '../support/pages/login';
+import dashPage from '../support/pages/dashboard';
+
 describe('dashboard', function () {
     context('quando o cliente faz um agendamento no app mobile', function () {
 
@@ -13,7 +16,8 @@ describe('dashboard', function () {
                 email: 'ramon@televisa.com',
                 password: 'pwd123',
                 is_provider: true
-            }
+            },
+            appointmentHour: '14:00'
         }
 
         before(function () {
@@ -22,23 +26,55 @@ describe('dashboard', function () {
             
             cy.apiLogin(data.customer);
             cy.setProviderId(data.provider.email);
+            cy.createAppointment(data.appointmentHour);
         })
 
         it('deve ser exibido no dashboard', function () {
-            cy.log('Id do ramon é ' + Cypress.env('providerId'));
-            cy.createAppointment();
+            loginPage.go();
+            loginPage.form(data.provider);
+            loginPage.submit();
+            cy.wait(3000);
+
+            dashPage.calendarShouldBeVisible();
+            dashPage.selectDay(Cypress.env('appointmentDay'));
+            dashPage.appointmentShouldBeVisible(data.customer, data.appointmentHour);
+            
         });
     });
 });
 
 import moment from 'moment';
 
-Cypress.Commands.add('createAppointment', function(){
+Cypress.Commands.add('createAppointment', function(appointmentHour){
     let now = new Date();
     now.setDate(now.getDate() + 1);
 
-    const day = moment(now).format('YYYY-MM-DD 14:00:00')
-    cy.log(day);
+    var day = now.getDay();
+    var isWeekend = (day === 6) || (day === 0);
+    if(isWeekend)
+    {
+        now.setDate(now.getDate() + 2);
+    }
+
+    Cypress.env('appointmentDay', now.getDate())
+
+    const date = moment(now).format('YYYY-MM-DD ' + appointmentHour + ':00');
+    
+    const payload = {
+        provider_id: Cypress.env('providerId'),
+        date: date
+    }
+
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3333/appointments',
+        body: payload,
+        headers: {
+            authorization: 'Bearer ' + Cypress.env('apiToken')
+        }
+    }).then(function(response){
+        expect(response.status).to.eq(200);
+    });
 });
 
 Cypress.Commands.add('setProviderId', function(providerEmail){

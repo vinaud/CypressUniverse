@@ -18,7 +18,7 @@ describe('dashboard', function () {
             cy.apiLogin(provider, true);
 
             dashPage.calendarShouldBeVisible();
-            dashPage.selectDay(Cypress.env('appointmentDay'));
+            dashPage.selectDay(Cypress.env('appointmentDate'));
             dashPage.appointmentShouldBeVisible(customer, appointment.hour);
             
         });

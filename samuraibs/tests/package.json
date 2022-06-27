@@ -9,7 +9,8 @@
     "cypress": "^10.1.0",
     "faker": "^5.5.3",
     "moment": "^2.29.3",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "underscore": "^1.13.4"
   },
   "dependencies": {}
 }

@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import moment from 'moment';
+const apiServer = Cypress.config().apiServer
 
 Cypress.Commands.add('postUser', function (user) {
 
@@ -33,7 +34,7 @@ Cypress.Commands.add('postUser', function (user) {
 
     cy.request(
         'POST',
-        'http://localhost:3333/users',
+        apiServer + '/users',
         user
     ).then(function (response) {
         expect(response.status).to.be.equal(200);
@@ -45,7 +46,7 @@ Cypress.Commands.add('recoveryPass', function (email) {
 
     cy.request(
         'POST',
-        'http://localhost:3333/password/forgot',
+        apiServer + '/password/forgot',
         { email: email }
     ).then(function (response) {
         expect(response.status).to.be.equal(204);
@@ -78,7 +79,7 @@ Cypress.Commands.add('createAppointment', function (appointmentHour) {
 
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3333/appointments',
+        url: apiServer + '/appointments',
         body: payload,
         headers: {
             authorization: 'Bearer ' + Cypress.env('apiToken')
@@ -92,7 +93,7 @@ Cypress.Commands.add('setProviderId', function (providerEmail) {
 
     cy.request({
         method: 'GET',
-        url: 'http://localhost:3333/providers',
+        url: apiServer + '/providers',
         headers: {
             authorization: 'Bearer ' + Cypress.env('apiToken')
         }
@@ -118,7 +119,7 @@ Cypress.Commands.add('apiLogin', function (user) {
 
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3333/sessions',
+        url: apiServer + '/sessions',
         body: payload
     }).then(function (response) {
         expect(response.status).to.eq(200);

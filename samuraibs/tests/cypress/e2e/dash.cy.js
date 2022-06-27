@@ -1,4 +1,3 @@
-import loginPage from '../support/pages/login';
 import dashPage from '../support/pages/dashboard';
 import { customer, provider, appointment } from '../support/factories/dash';
 
@@ -15,10 +14,7 @@ describe('dashboard', function () {
         })
 
         it('deve ser exibido no dashboard', function () {
-            loginPage.go();
-            loginPage.form(provider);
-            loginPage.submit();
-            cy.wait(3000);
+            cy.uiLogin(provider);
 
             dashPage.calendarShouldBeVisible();
             dashPage.selectDay(Cypress.env('appointmentDay'));

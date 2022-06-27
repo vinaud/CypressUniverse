@@ -24,7 +24,18 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import moment from 'moment';
+import loginPage from '../support/pages/login';
+import dashPage from '../support/pages/dashboard';
+
 const apiServer = Cypress.config().apiServer
+
+Cypress.Commands.add('uiLogin', function(user){
+    loginPage.go();
+    loginPage.form(user);
+    loginPage.submit();
+    dashPage.header.userLoggedIn(user.name);
+
+});
 
 Cypress.Commands.add('postUser', function (user) {
 

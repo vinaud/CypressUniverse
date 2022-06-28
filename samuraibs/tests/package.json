@@ -5,6 +5,11 @@
   "main": "index.js",
   "author": "João Vinaud",
   "license": "MIT",
+  "scripts": {
+    "test": "npx cypress run",
+    "testOnair": "npx cypress run --spec ./cypress/e2e/onair.cy.js",
+    "testChrome": "npx cypress run --browser chrome"
+  },
   "devDependencies": {
     "cypress": "^10.1.0",
     "faker": "^5.5.3",

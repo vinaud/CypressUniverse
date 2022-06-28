@@ -18,3 +18,8 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+//afterEach(function(){
+//    cy.wait(1500);
+//    cy.screenshot();
+//})

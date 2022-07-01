@@ -40,8 +40,8 @@ module.exports = defineConfig({
           })
         } 
     })},
-  baseUrl: 'http://localhost:3000',
-  apiServer: 'http://localhost:3333',
+  baseUrl: 'https://samuraibs-web-vinaud.herokuapp.com',
+  apiServer: 'https://samuraibs-api-vinaud.herokuapp.com',
   viewportWidth: 1440,
   viewportHeight: 900
 },

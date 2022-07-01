@@ -8,7 +8,7 @@ class DashPage {
     }
 
     calendarShouldBeVisible() {
-        cy.get(el.dayPicker, { timeout: 7000 }).should('be.visible');
+        cy.get(el.dayPicker).should('be.visible');
     }
 
     selectDay(appointmentDate) {

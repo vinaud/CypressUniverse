@@ -44,6 +44,7 @@ module.exports = defineConfig({
   apiServer: 'https://samuraibs-api-vinaud.herokuapp.com',
   viewportWidth: 1440,
   viewportHeight: 900,
-  defaultCommandTimeout: 30000
+  defaultCommandTimeout: 30000,
+  projectId: "vdkcpd"
 },
 });
